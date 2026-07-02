@@ -1,32 +1,23 @@
 name: Deploy to GitHub Pages
 
+# main 브랜치의 내용을 gh-pages 브랜치로 동기화하면
+# GitHub Pages(소스: gh-pages 브랜치)가 자동으로 재배포합니다.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Sync main to gh-pages
+        run: git push origin HEAD:gh-pages --force

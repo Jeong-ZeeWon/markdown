@@ -2,6 +2,8 @@
 
 구글 드라이브에 있는 마크다운(`.md`) 파일을 **실시간으로** 열어보는 웹 앱입니다.
 
+**🌐 배포된 앱: <https://jeong-zeewon.github.io/markdown/>**
+
 - 드라이브의 모든 `.md` / `.markdown` 파일을 자동으로 찾아 목록으로 보여줍니다
 - GitHub 스타일 마크다운 렌더링 (코드 하이라이팅, 표, 체크박스 지원)
 - **실시간 연동**: 드라이브에서 파일이 수정되면 5초 안에 자동으로 화면에 반영됩니다
@@ -49,11 +51,13 @@ python3 -m http.server 8000
 # 브라우저에서 http://localhost:8000 접속
 ```
 
-### GitHub Pages로 배포
+### GitHub Pages 배포 (자동)
 
-1. 저장소 **Settings → Pages**에서 Source를 `main` 브랜치(root)로 설정
-2. `https://<깃허브아이디>.github.io/markdown/` 접속
-3. OAuth 클라이언트의 "승인된 JavaScript 원본"에 `https://<깃허브아이디>.github.io`를 추가했는지 확인
+이 저장소는 GitHub Pages(`gh-pages` 브랜치)로 배포되어 있습니다.
+`main` 브랜치에 푸시하면 워크플로가 `gh-pages`로 자동 동기화해서 사이트가 갱신됩니다.
+
+- 배포 주소: <https://jeong-zeewon.github.io/markdown/>
+- OAuth 클라이언트의 "승인된 JavaScript 원본"에 `https://jeong-zeewon.github.io`를 추가해야 로그인이 동작합니다
 
 ## 실시간 연동 동작 방식
 
