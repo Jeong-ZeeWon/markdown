@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drive Markdown Viewer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗂️</text></svg>" />
+  <link rel="stylesheet" href="vendor/github.min.css" id="hljs-theme-light" />
+  <link rel="stylesheet" href="vendor/github-dark.min.css" id="hljs-theme-dark" disabled />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 초기 설정 화면 (OAuth Client ID 입력) -->
+  <div id="setup-screen" class="screen hidden">
+    <div class="setup-card">
+      <h1>🗂️ Drive Markdown Viewer</h1>
+      <p>구글 드라이브의 마크다운 파일을 실시간으로 열어보는 뷰어입니다.</p>
+      <p>사용하려면 Google Cloud OAuth <strong>클라이언트 ID</strong>가 필요합니다.
+        <a href="https://github.com/Jeong-ZeeWon/markdown#설정-방법" target="_blank" rel="noopener">설정 방법 보기</a></p>
+      <input type="text" id="client-id-input" placeholder="예: 1234567890-abc.apps.googleusercontent.com" />
+      <button id="save-client-id" class="btn btn-primary">저장하고 시작하기</button>
+    </div>
+  </div>
+
+  <!-- 로그인 화면 -->
+  <div id="login-screen" class="screen hidden">
+    <div class="setup-card">
+      <h1>🗂️ Drive Markdown Viewer</h1>
+      <p>구글 계정으로 로그인하면 드라이브의 <code>.md</code> 파일 목록을 불러옵니다.</p>
+      <button id="sign-in" class="btn btn-primary">Google 계정으로 로그인</button>
+      <button id="change-client-id" class="btn btn-link">클라이언트 ID 변경</button>
+    </div>
+  </div>
+
+  <!-- 메인 앱 화면 -->
+  <div id="app-screen" class="screen hidden">
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <span class="app-title">🗂️ Drive MD</span>
+        <button id="refresh-list" class="icon-btn" title="목록 새로고침">⟳</button>
+        <button id="sign-out" class="icon-btn" title="로그아웃">⏻</button>
+      </div>
+      <input type="search" id="search-input" placeholder="파일 이름 검색…" />
+      <div id="file-list" class="file-list">
+        <div class="list-status">불러오는 중…</div>
+      </div>
+    </aside>
+
+    <main id="viewer">
+      <div id="viewer-toolbar" class="hidden">
+        <div class="file-info">
+          <span id="current-file-name"></span>
+          <span id="sync-status" class="sync-badge sync-live" title="드라이브 변경 사항을 자동으로 반영합니다">● 실시간 연동 중</span>
+        </div>
+        <div class="toolbar-actions">
+          <span id="last-updated"></span>
+          <a id="open-in-drive" href="#" target="_blank" rel="noopener" class="btn btn-small">Drive에서 열기</a>
+          <button id="toggle-theme" class="icon-btn" title="다크 모드 전환">🌓</button>
+        </div>
+      </div>
+      <div id="viewer-empty" class="viewer-empty">
+        <p>👈 왼쪽에서 마크다운 파일을 선택하세요</p>
+      </div>
+      <article id="markdown-body" class="markdown-body hidden"></article>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/purify.min.js"></script>
+  <script src="vendor/highlight.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer onload="onGisLoaded()"></script>
+  <script src="app.js"></script>
+</body>
+</html>
